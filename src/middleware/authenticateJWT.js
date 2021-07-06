@@ -9,10 +9,9 @@ const authenticateJWT = (req, res, next) => {
                     console.error("error verifying jwt: ", err);
                     return res.status(500).send(err);
                 }
-
                 req.user = {
-                    id: user.id,
-                    username: user.id
+                    id: user.user.id,
+                    username: user.user.username
                 }
 
                 return next();
