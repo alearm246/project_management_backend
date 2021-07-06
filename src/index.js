@@ -1,22 +1,33 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const db = require("./config/db");
+const cookieParser = require("cookie-parser");
+const passport = require("passport");
 
-const userRoutes = require("./routes/userRoutes");
+const db = require("./config/db");
+const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
+
+const authenticateJWT = require("./middleware/authenticateJWT");
 
 const app = express();
 const port = process.env.PLATFORM_API_PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(
     cors({
         origin: ["http://localhost:3006", "http://localhost:3000"]
     })
 )
+app.use(passport.initialize());
 
-app.use("/users", userRoutes);
+
+require("./auth/local");
+
+app.use("/auth", authRoutes);
+app.use("/users", authenticateJWT, userRoutes);
 
 app.get("/", (req, res) => {
     res.send("you've reached the server!");
