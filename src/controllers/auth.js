@@ -25,7 +25,6 @@ const login = async (req, res) => {
                     console.error(err);
                     return res.status(500).send(err);
                 }
-
                 // create our jwttoken
                 const body = {
                     id: user.id,

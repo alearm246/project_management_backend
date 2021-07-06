@@ -9,6 +9,13 @@ class User {
         return user;
     }
 
+    static async findById(id) {
+        const result = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
+        const user = result.rows[0];
+
+        return user;
+    }
+
     static async create(username, password){
         const query = await db.query(`SELECT username FROM users WHERE username = $1`, [username]);
         const user = query.rows[0];

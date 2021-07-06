@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 const authenticateJWT = (req, res, next) => {
         const token = req.cookies.jwt;
@@ -9,9 +10,11 @@ const authenticateJWT = (req, res, next) => {
                     console.error("error verifying jwt: ", err);
                     return res.status(500).send(err);
                 }
+                const currentUser = await User.findById(user.user.id);
+
                 req.user = {
-                    id: user.user.id,
-                    username: user.user.username
+                    id: currentUser.id,
+                    username: currentUser.username
                 }
 
                 return next();
