@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const db = require("./config/db");
 
 const userRoutes = require("./routes/userRoutes");
 
@@ -22,3 +23,8 @@ app.get("/", (req, res) => {
 })
 
 app.listen(port, () => console.log(`server is running on port ${port}`));
+
+db
+  .connect()
+  .then(() => console.log("connected to database..."))
+  .catch(err => console.error("error connecting to the database: ", err.stack))
