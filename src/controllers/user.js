@@ -1,4 +1,4 @@
-const getUsers = (req, res) => {
+const getUsers = async (req, res) => {
     try {
         return res.status(200).send("USERS");
     } catch(err) {
@@ -8,5 +8,4 @@ const getUsers = (req, res) => {
 
 module.exports = {
     getUsers,
-    createUser,
 }
