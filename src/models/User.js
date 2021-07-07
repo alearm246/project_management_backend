@@ -9,8 +9,8 @@ class User {
         return user;
     }
 
-    static async findById(id) {
-        const result = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
+    static async findById(userId) {
+        const result = await db.query(`SELECT * FROM users WHERE id = $1`, [userId]);
         const user = result.rows[0];
 
         return user;
@@ -37,12 +37,29 @@ class User {
         return createdUser;
     }
 
-    static async isValidPassword(id, password){
-        const result = await db.query(`SELECT password FROM users WHERE id = $1`, [id]);
+    static async isValidPassword(userId, password){
+        const result = await db.query(`SELECT password FROM users WHERE id = $1`, [userId]);
         const user = result.rows[0];
 
         return await bcrypt.compare(password, user.password);
     }
+
+    /*
+    static async joinClan(userId, clanId) {
+        try {
+            const result = await db.query(
+                `INSERT INTO users_clans (user_id, clan_id) VALUES ($1, $1) RETURNING *`,
+                [userId, clanId]
+            )
+
+            const joinedResult = result.rows[0];
+            console.log(joinedResult);
+
+            return joinedResult;
+        } catch(err) {
+            throw new Error(err);
+        }
+    }*/
 }
 
 module.exports = User;
