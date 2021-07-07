@@ -3,6 +3,7 @@ const getUsers = async (req, res) => {
         return res.status(200).send("USERS");
     } catch(err) {
         console.error(err);
+        res.status(500).send(err);
     }
 }
 
@@ -14,6 +15,7 @@ const currentUser = async (req, res) => {
         return res.status(200).send(currentUser);
     } catch(err){
         console.error(err);
+        res.status(500).send(err);
     }
 }
 
