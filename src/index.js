@@ -7,6 +7,7 @@ const passport = require("passport");
 const db = require("./config/db");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
+const clanRoutes = require("./routes/clan");
 
 const authenticateJWT = require("./middleware/authenticateJWT");
 
@@ -28,7 +29,7 @@ app.use(passport.initialize());
 require("./auth/local");
 
 app.use("/auth", authRoutes);
-app.use("/users", authenticateJWT, userRoutes);
+app.use("/users", authenticateJWT, userRoutes, clanRoutes);
 
 app.get("/", (req, res) => {
     res.send("you've reached the server!");
